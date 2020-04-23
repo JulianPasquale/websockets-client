@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import Websocket           from 'react-websocket'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+import './css/App.css'
+
+export default () => {
+  const [count, setCount] = useState(0)
+  const [data, setData]   = useState([])
+
+  const handleData = (response) => {
+    let result = JSON.parse(response)
+
+    setData(data.concat(result))
+    setCount(count + 1)
+  }
+
+  console.log(data)
+
+  return(
+    <div className = "App">
+      <header className = "App-header">
+      <div>
+        Count: <strong>{ count } </strong>
+
+        <Websocket
+          url       = 'ws://localhost:8888/api/v2/'
+          onMessage = { handleData }
+        />
+
+        <div>
+          { data }
+        </div>
+
+      </div>
       </header>
     </div>
-  );
+  )
 }
-
-export default App;
