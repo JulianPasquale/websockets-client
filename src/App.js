@@ -14,8 +14,6 @@ export default () => {
     setCount(count + 1)
   }
 
-  console.log(data)
-
   return(
     <div className = "App">
       <header className = "App-header">
@@ -23,8 +21,9 @@ export default () => {
         Count: <strong>{ count } </strong>
 
         <Websocket
-          url       = 'ws://localhost:8888/api/v2/'
+          url       = 'ws://localhost:5000/api/v2/echo'
           onMessage = { handleData }
+          debug     = { true }
         />
 
         <div>
