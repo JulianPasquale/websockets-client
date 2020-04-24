@@ -9,9 +9,19 @@ export default () => {
 
   const handleData = (response) => {
     let result = JSON.parse(response)
+    result.key = count
 
-    setData(data.concat(result))
+    setData([result, ...data])
     setCount(count + 1)
+  }
+
+  const renderItem = (item) => {
+    const { key, ...fields } = item
+    return Object.entries(fields).map(([k, v]) =>
+      <li key = { key }>
+        <b className = 'App-link'>{ k }</b>: { v }
+      </li>
+    )
   }
 
   return(
@@ -21,13 +31,17 @@ export default () => {
         Count: <strong>{ count } </strong>
 
         <Websocket
-          url       = 'ws://localhost:5000/api/v2/echo'
+          url       = 'ws://localhost:5000/api/v2/samples'
           onMessage = { handleData }
           debug     = { true }
         />
 
         <div>
-          { data }
+          <ul>
+            {
+              data.map(renderItem)
+            }
+          </ul>
         </div>
 
       </div>
