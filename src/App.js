@@ -35,8 +35,6 @@ export default () => {
     setCount(count + 1)
   }
 
-  console.log(location)
-
   return(
     <div className = 'App'>
       <header className = 'App-header'>
